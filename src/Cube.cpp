@@ -46,7 +46,7 @@ Cube::Cube(Application *app,float x, float y, float z)
 {
     if (!done) {
         done = true;
-        vertices = loadModel("cube.obj", indices);
+        vertices = loadModel("cube.glb", indices);
         vertexBuffer = VertexBuffer(app->device.device, app->physicalDevice.physicalDevice, app->commandPool[0].commandPool, &app->queue, vertices);
         indexBuffer = IndexBuffer(app->device.device, app->physicalDevice.physicalDevice, app->commandPool[0].commandPool, &app->queue, indices);
         dirtTexture = std::make_unique<Texture>(app->device.device, &app->queue, app->physicalDevice.physicalDevice, "dirt.jpg", false);
@@ -70,10 +70,11 @@ Cube::Cube(Application *app,float x, float y, float z)
 
     mvp.view = glm::lookAt(cameraPos, cameraTarget, upVector);
 
-    mvp.model = glm::translate(glm::mat4(1.f), glm::vec3(y, x, z));
+    mvp.model = glm::translate(glm::mat4(1.f), glm::vec3(x, y, z));
 
+    mvp.lightPosition = glm::vec3(x,y,z);
     mvpUBO = std::make_unique<UniformBuffer>(app->device.device, app->physicalDevice.physicalDevice, sizeof(UBO), &mvp, 0, 0, 0, vk::DescriptorType::eUniformBuffer);
-    mvpUBO->updateData(&mvp);
+    // mvpUBO->updateData(&mvp);
 
 }
 
@@ -86,6 +87,7 @@ void Cube::destroy() {
         dirtTexture->destroy(_app->device.device);
         dirtTexture.reset();
         imageIndexUBO.reset();
+        destroyDone = true;
     }
     mvpUBO->destroy(_app->device.device);
     mvpUBO.reset();

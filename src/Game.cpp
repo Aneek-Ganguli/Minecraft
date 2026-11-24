@@ -8,22 +8,25 @@
 
 Game::Game():app("Minecraft", 800, 600, false) {
 
-    cube = Cube(&this->app,0,0,-7);
+    chunk = Chunk(&this->app);
 
-    // chunk = Chunk(&this->app);
+    camera = Camera(&this->app);
+
+    lastTime = glfwGetTime();
 
     runGame();
 }
 
 void Game::runGame() {
     while (app.isWindowOpen()) {
+        currentTime = glfwGetTime();
+        float deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
         app.startFrame();
 
-        cube.draw(glm::lookAt(
-                glm::vec3(0.0f, 10.f, 10.f),
-                glm::vec3(0.0f, 0.0f, -7.f),
-                glm::vec3(0.f, 1.f, 0.f)
-        ));
+        camera.update(deltaTime);
+
+        chunk.draw(camera.getProjection());
 
         app.endFrame();
     }
@@ -32,7 +35,7 @@ void Game::runGame() {
 Game::~Game() {
     app.waitIdle();
 
-    // chunk.destroy();
-    cube.destroy();
+    chunk.destroy();
+    // cube.destroy();
     app.destroy();
 }

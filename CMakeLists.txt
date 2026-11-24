@@ -9,9 +9,11 @@ add_executable(Minecraft src/main.cpp
         src/Game.cpp
         src/Cube.cpp
         src/Chunk.cpp
+        src/Camera.cpp
         include/Game.h
         include/Cube.h
         include/Chunk.h
+        include/Camera.h
 )
 
 target_include_directories(Minecraft

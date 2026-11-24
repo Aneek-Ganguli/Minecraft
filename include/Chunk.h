@@ -9,15 +9,18 @@
 
 #include "Cube.h"
 
-constexpr int CHUNK_SIZE = 32;
+constexpr int CHUNK_HEIGHT = 8;
+constexpr int CHUNK_WIDTH = 8;
+constexpr int CHUNK_DEPTH = 8;
 inline Texture texture;
 
 class Chunk {
-    Cube* cube[CHUNK_SIZE];
+    Application* app;
+    Cube* cube[CHUNK_HEIGHT*CHUNK_HEIGHT * CHUNK_DEPTH];
 public:
     Chunk(AG_EngineV2::Application* app);
     Chunk()=default;
-    void draw();
+    void draw(glm::mat4 projection);
     void destroy();
 };
 
