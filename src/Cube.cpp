@@ -96,7 +96,9 @@ void Cube::destroy() {
 void Cube::draw(glm::mat4 view) {
     mvp.view = view;
     mvpUBO->updateData(&mvp);
-    _app->bindPipeline(true);
-    _app->draw(&vertexBuffer, &indexBuffer, indices.size(), {mvpUBO->descriptorWrite, imageIndexUBO->descriptorWrite}, true);
-    dirtTexture->update(imageIndex, _app->bindlessTextures.descriptorSet,_app->device.device);
+    if (enable){
+        _app->bindPipeline(true);
+        _app->draw(&vertexBuffer, &indexBuffer, indices.size(), {mvpUBO->descriptorWrite, imageIndexUBO->descriptorWrite}, true);
+        dirtTexture->update(imageIndex, _app->bindlessTextures.descriptorSet,_app->device.device);
+    }
 }

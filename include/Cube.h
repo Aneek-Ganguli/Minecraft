@@ -29,13 +29,14 @@ class Cube {
     // std::vector<VertexData>  vertexData;
     // Entity cubeEntity;
 
-    UBO mvp;
     std::unique_ptr<UniformBuffer> mvpUBO;
 public:
     Cube(Application* app, float x, float y, float z);
     Cube()=default;
     void destroy();
     void draw(glm::mat4 view);
+    bool enable = true;
+    UBO mvp;
 };
 
 

@@ -46,7 +46,7 @@ void Camera::update(float deltaTime) {
     glfwGetFramebufferSize(_app->window.window, &width, &height);
     float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
-    constexpr float sensitivity = 4.f;
+    constexpr float sensitivity = 3.f;
     cameraYaw   += mouseDeltaX * sensitivity;
     cameraPitch -= mouseDeltaY * sensitivity;
     cameraPitch = glm::clamp(cameraPitch, -89.0f, 89.0f);
